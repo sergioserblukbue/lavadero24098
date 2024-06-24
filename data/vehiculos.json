@@ -1,0 +1,16 @@
+{
+    "dfr457": {
+        "interior": "s",
+        "exterior": "s",
+        "motor": "s",
+        "estado": "entregado",
+        "dniPropietario": "4545"
+    },
+    "jgu457": {
+        "interior": "s",
+        "exterior": "s",
+        "motor": "s",
+        "estado": "pendiente",
+        "dniPropietario": "2525"
+    }
+}
