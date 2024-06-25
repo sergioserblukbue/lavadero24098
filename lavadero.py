@@ -33,19 +33,7 @@ def ingresarVehiculo(vehiculos):
     }
     guardarDatos(vehiculos)
     return
-def modificarEstado(vehiculos):
-    limpiarPantalla()
-    print("modificar estados".center(50," "))
-    patente=input("ingrese la patente del vehiculo: ")
-    if patente in vehiculos:
-        print(f"patente: {patente} estado: {vehiculos[patente]['estado']}")
-        estado=input("ingrese el nuevo estado: proceso/terminado/entregado: ")
-        vehiculos[patente]["estado"]=estado
-        guardarDatos(vehiculos)
-        input("datos guardados correctamente!  enter para continuar...")
-    else:
-        input("vehiculo no registrado! enter para continuar")
-    return
+
 def menu():
     print("menu principal".center(50," "))
     print("""
@@ -74,65 +62,72 @@ def entregarVehiculos(vehiculos):
     else:
         print("el vehiculo no esta registrado!")
     return
-
+def modificarEstado(vehiculos):
+    print("Modificar estados".center(50," "))
+    patente=input("ingrese la patente del vehiculo: ")
+    if patente in vehiculos:
+        print(f"matricula: {patente} estado: {vehiculos[patente]['estado']}")
+        estado=input("ingrese el nuevo estado: en proceso/terminado/entregado: ")
+        vehiculos[patente]["estado"]=estado
+        print("estado modificado correctamente!")
+        guardarDatos(vehiculos)
+        input("presione enter para continuar")
+    else:
+        print("vehiculo no registrado!")
+        input("presione enter para continuar")
+    return
 def listarVehiculos(vehiculos):
     limpiarPantalla()
-    print("listados".center(50," "))
-    print("="*50)
-    print("""
-            1. para listar todos
-            2. para vehiculos pendientes
-            3. para vehiculos listos
-            4. para vehiculos entregados
-            5. para lavado completo
-            6. para salir al menu anterior
-        """)
-    op=input("seleccione una opcion: ")
-    limpiarPantalla()
-    if op =="1":
-        print("Listado de todos los vehiculos".center(50," "))
-        print("|"+"matricula".center(10)+"|"+"dni propietario".center(17)+"|"+ "estado".center(17," ")+"|")
-        print("="*48)
-        for mat,vehiculo in vehiculos.items():
-            print("|" + str(mat).ljust(10," ") + "|" + str(vehiculo["dniPropietario"]).ljust(17," ")+ "|"+ str(vehiculo["estado"]).ljust(17," ") + "|") 
-            print("|"+ "-"*46 + "|")
-        print("fin del listado!")
-    elif op =="2":
-        print("Listado de vehiculos pendientes".center(50," "))
-        print("|"+"matricula".center(10)+"|"+"dni propietario".center(17)+"|"+ "estado".center(17," ")+"|")
-        print("="*48)
-        for mat,vehiculo in vehiculos.items():
-            if vehiculo["estado"]=="pendiente":
-                print("|" + str(mat).ljust(10," ") + "|" + str(vehiculo["dniPropietario"]).ljust(17," ")+ "|"+ str(vehiculo["estado"]).ljust(17," ") + "|") 
-                print("|"+ "-"*46 + "|")
-        print("fin del listado!")
-    elif op =="3":
-        print("Listado de vehiculos terminado".center(50," "))
-        print("|"+"matricula".center(10)+"|"+"dni propietario".center(17)+"|"+ "estado".center(17," ")+"|")
-        print("="*48)
-        for mat,vehiculo in vehiculos.items():
-            if vehiculo["estado"]=="terminado":
-                print("|" + str(mat).ljust(10," ") + "|" + str(vehiculo["dniPropietario"]).ljust(17," ")+ "|"+ str(vehiculo["estado"]).ljust(17," ") + "|") 
-                print("|"+ "-"*46 + "|")
-        print("fin del listado!")
-    elif op=="4":
-        print("Listado de vehiculos entregados".center(50," "))
-        print("|"+"matricula".center(10)+"|"+"dni propietario".center(17)+"|"+ "estado".center(17," ")+"|")
-        print("="*48)
-        for mat,vehiculo in vehiculos.items():
-            if vehiculo["estado"]=="entregado":
-                print("|" + str(mat).ljust(10," ") + "|" + str(vehiculo["dniPropietario"]).ljust(17," ")+ "|"+ str(vehiculo["estado"]).ljust(17," ") + "|") 
-                print("|"+ "-"*46 + "|")
-        print("fin del listado!")
-    elif op=="5":
-        print("vehiculos con lavado completo".center(50," "))
-        print("|"+"matricula".center(10)+"|"+"dni propietario".center(17)+"|"+ "estado".center(17," ")+"|")
-        print("="*48)
-        for mat,vehiculo in vehiculos.items():
-            if vehiculo["interior"]=="s" and vehiculo["exterior"]=="s" and vehiculo["motor"]=="s":
-                print("|" + str(mat).ljust(10," ") + "|" + str(vehiculo["dniPropietario"]).ljust(17," ")+ "|"+ str(vehiculo["estado"]).ljust(17," ") + "|") 
-                print("|"+ "-"*46 + "|")
-        print("fin del listado!")
+    print("Listar Vehiculos".center(50," "))
+    print("1. listar todos")
+    print("2. listar pendientes")
+    print("3. listar terminados")
+    print("4. listar entregados")
+    print("5. ir al menu anterior")
+    op = input("seleccione una opcion: ")
+    if op == "1":
+        limpiarPantalla()
+        print("Listado completo".center(50," "))
+        print("="*23)
+        print("|" + "patente".center(10," ") + "|" + "estado".center(10," ") + "|")
+        print("="*23)
+        for pat,dic in vehiculos.items():
+            print("|" + str(pat).ljust(10," ") + "|" + str(dic['estado']).ljust(10," ") + "|"  )
+        print("="*23)
+        input("presione enter para continuar...")
+    if op =="2":
+        limpiarPantalla()
+        print("listado de pendientes".center(50," "))
+        print("="*23)
+        print("|" + "patente".center(10," ") + "|" + "estado".center(10," ") + "|")
+        print("="*23)
+        for pat,dic in vehiculos.items():
+            if dic["estado"]=="pendiente":
+                print("|" + str(pat).ljust(10," ") + "|" + str(dic['estado']).ljust(10," ") + "|"  )
+        print("="*23)
+        input("presione enter para continuar...")
+    if op =="3":
+        limpiarPantalla()
+        print("listado de terminados".center(50," "))
+        print("="*23)
+        print("|" + "patente".center(10," ") + "|" + "estado".center(10," ") + "|")
+        print("="*23)
+        for pat,dic in vehiculos.items():
+            if dic["estado"]=="terminado":
+                print("|" + str(pat).ljust(10," ") + "|" + str(dic['estado']).ljust(10," ") + "|"  )
+        print("="*23)
+        input("presione enter para continuar...")
+    if op =="4":
+        limpiarPantalla()
+        print("listado de entregados".center(50," "))
+        print("="*23)
+        print("|" + "patente".center(10," ") + "|" + "estado".center(10," ") + "|")
+        print("="*23)
+        for pat,dic in vehiculos.items():
+            if dic["estado"]=="entregado":
+                print("|" + str(pat).ljust(10," ") + "|" + str(dic['estado']).ljust(10," ") + "|"  )
+        print("="*23)
+        input("presione enter para continuar...")
     return
 
 #programa principal
@@ -146,7 +141,6 @@ while True:
         pass
         entregarVehiculos(vehiculos)
     elif opcion=="3":
-        pass
         listarVehiculos(vehiculos)
     elif opcion=="4":
         modificarEstado(vehiculos)
